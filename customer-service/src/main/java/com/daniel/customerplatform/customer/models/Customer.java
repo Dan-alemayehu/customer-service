@@ -33,7 +33,13 @@ public class Customer {
 //Helper methods
 
     public void addAddress(Address address) {
-        this.addresses.add(address);
-        address.setCustomer(this);
+
+        Customer currentOwner = address.getCustomer();
+        if(currentOwner != null && currentOwner != this){
+            throw new IllegalArgumentException("Address already belongs to another customer");
+        } else {
+            this.addresses.add(address);
+            address.setCustomer(this);
+        }
     }
 }
